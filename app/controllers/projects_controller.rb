@@ -1,5 +1,9 @@
 class ProjectsController < ApplicationController
   
+  def index
+    @projects = Project.where(user: current_user)
+  end
+  
   def new
     @project = Project.new
   end
@@ -8,7 +12,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     if @project.save
       flash[:success] = "You created the project: #{@project.name}"
-      redirect_to root_url
+      redirect_to projects_path
     else 
       flash.now[:error] = "There was something wrong."
       render :new

@@ -11,6 +11,7 @@ RSpec.describe "Project creation", type: :system do
     fill_in("project_name", with: "Project test name")
     click_on("Create")
     expect(page).to have_selector(".alert-success")
+    expect(current_path).to eq(projects_path)
     expect(Project.count).to eq(projects_count + 1)
   end
   
