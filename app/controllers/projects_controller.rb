@@ -4,6 +4,10 @@ class ProjectsController < ApplicationController
     @projects = Project.where(user: current_user)
   end
   
+  def show
+    @project = Project.find(params[:id])
+  end
+  
   def new
     @project = Project.new
   end
