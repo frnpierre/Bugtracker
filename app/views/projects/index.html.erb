@@ -1,10 +1,11 @@
 <h1>Index of projects</h1>
 
-<ul>
+<ul id="projects-list">
   <% @projects.each do |project| %>
     <li>
       <%= link_to project.name, project_path(project), id: "project-#{project.name}" %>
       <%= link_to "Edit", edit_project_path(project), class: "btn btn-info" %>
+      <%= link_to "Delete", project_path(project), method: :delete, id: "project-#{project.id}" %>
     </li>
   <% end %>
 </ul>

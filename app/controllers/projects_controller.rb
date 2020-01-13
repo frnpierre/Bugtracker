@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  
+
   def index
     @projects = Project.where(user: current_user)
   end
@@ -38,9 +38,21 @@ class ProjectsController < ApplicationController
     end
   end
   
+  def destroy 
+    @project = Project.find(params[:id])
+    if @project.destroy
+      flash[:success] = "Project #{@project.name} deleted"
+      redirect_to projects_url 
+    else 
+      flash[:error] = "There was an error"
+      redirect_to projects_url
+    end
+  end
+  
   private
   
     def project_params
       params.require(:project).permit(:name).merge(user: current_user)
     end
+    
 end

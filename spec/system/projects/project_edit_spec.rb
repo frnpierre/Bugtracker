@@ -5,7 +5,7 @@ RSpec.describe "Project edit", type: :system do
   let(:user) { User.create(email: "test@example.com", password: "password") } 
   let(:project) { Project.create(name: "Testproject", user_id: user.id) }
   
-  it "by a logged in user is possible via index" do 
+  it "by a logged in user is possible via the index page" do 
     visit edit_project_path(project)
     expect(current_path).to eq(new_user_session_path)
     sign_in(user)
