@@ -10,10 +10,10 @@
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
+        <%= link_to "Projects", projects_path, class: "nav-link" %>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
+        <%= link_to "New project", new_project_path, class: "nav-link" %>
       </li>
       <li class="nav-item">
         <% if user_signed_in? %>
