@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe "Project show", type: :system do 
   
-  let(:user) { User.create(email: "test@example.com", password: "password") } 
-  let(:project) { Project.create(name: "Testproject", user_id: user.id) }
+  let(:user) { create(:user) } 
+  let(:project) { create(:project, user_id: user.id) }
   
   it "by a logged in user is possible via the index page" do 
     expect(project.user_id).to eq(user.id)

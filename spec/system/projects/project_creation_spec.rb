@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Project creation", type: :system do
-
-  let(:user) { User.create(email: "test@example.com", password: "password") }
+  
+  let(:user) { create(:user) } 
   
   it "by a logged in user is possible" do
     projects_count = Project.count
@@ -21,5 +21,4 @@ RSpec.describe "Project creation", type: :system do
     visit new_project_path
     expect(current_path).to eq(new_user_session_path)
   end
-  
 end

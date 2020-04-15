@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "user authentication", type: :system do 
   
-  let(:user) { User.create(email: "test@example.com", password: "password") }
+  let(:user) { create(:user) } 
   
   it "login is possible with valid credentials" do 
     visit new_user_session_path
