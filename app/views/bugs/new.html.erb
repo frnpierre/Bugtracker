@@ -1,16 +1,15 @@
 <div class="row">
   <div class="col-md-8 offset-md-2">
-    <%= form_with model: @project, local: true, html: { class: "needs-validation", novalidate: true } do |f| %>
-      <legend>Create a new project</legend>
+    <%= form_with model: [@project, @bug], local: true, html: { class: "needs-validation", novalidate: true } do |f| %>
+      <legend>Report a bug on project: <%= @project.name %></legend>
       
       <div class="form-group">
-        <%= f.label :name  %>
-        <%= f.text_field :name, class: "form-control", required: true %>
-        <%= render "new_form_validations" %>
+        <%= f.label :description %>
+        <%= f.text_area :description, class: "form-control", required: true %>
       </div>
       
       <div class="form-group">
-        <%= f.submit "Create", class: "btn btn-success"%>
+        <%= f.submit "Report", class: "btn btn-success"%>
       </div>
     <% end %>
   </div>
