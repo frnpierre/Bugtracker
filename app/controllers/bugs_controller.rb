@@ -20,6 +20,6 @@ class BugsController < ApplicationController
   private
   
     def bug_params
-      params.require(:bug).permit(:description)
+      params.require(:bug).permit(:description).merge(user: current_user)
     end
 end
