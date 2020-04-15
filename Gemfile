@@ -49,6 +49,8 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Rspec
   gem "rspec-rails", "~> 3.7.0"
+  # Factory bot
+  gem "factory_bot_rails"
 end
 
 group :development do
