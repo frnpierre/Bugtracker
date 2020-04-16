@@ -3,10 +3,9 @@ require "rails_helper"
 RSpec.describe "Project show", type: :system do 
   
   let(:user) { create(:user) } 
-  let(:project) { create(:project, user_id: user.id) }
+  let!(:project) { create(:project, user_id: user.id) }
   
   it "by a logged in user is possible via the index page" do 
-    expect(project.user_id).to eq(user.id)
     visit projects_path
     expect(current_path).to eq(new_user_session_path)
     sign_in(user)
