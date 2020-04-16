@@ -15,7 +15,7 @@ RSpec.describe "Project creation", type: :system do
     expect(Project.count).to eq(projects_count + 1)
   end
   
-  it "by a logged out user is NOT possible" do
+  it "is not accessible to a logged out user" do
     sign_in(user)
     sign_out(user)
     visit new_project_path

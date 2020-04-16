@@ -15,4 +15,11 @@ RSpec.describe "Project show", type: :system do
     click_link(project.name)
     expect(current_path).to eq(project_path(project))
   end
+  
+  it "is not accessible to a logged out user" do 
+    sign_in(user)
+    sign_out(user)
+    visit project_path(project)
+    expect(current_path).to eq(new_user_session_path)
+  end
 end

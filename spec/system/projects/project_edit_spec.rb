@@ -18,4 +18,11 @@ RSpec.describe "Project edit", type: :system do
     expect(page).to have_selector(".alert-success")
     expect(page).to have_text("Edited Testproject")
   end
+
+  it "is not accessible to a logged out user" do 
+    sign_in(user)
+    sign_out(user)
+    visit edit_project_path(project)
+    expect(current_path).to eq(new_user_session_path)
+  end
 end
