@@ -5,15 +5,32 @@ class BugsController < ApplicationController
     @bug = @project.bugs.build
   end
   
+  def edit
+    @project = Project.find(params[:project_id])
+    @bug = @project.bugs.find(params[:id])
+  end
+  
   def create
     @project = Project.find(params[:project_id])
     @bug = @project.bugs.build(bug_params)
     if @bug.save
-      flash[:success] = "Bug reported"
+      flash[:success] = "Bug reported."
       redirect_to project_path(@bug.project)
     else 
       flash.now[:error] = "There was something wrong."
       render :new
+    end
+  end
+  
+  def update
+    @project = Project.find(params[:project_id])
+    @bug = @project.bugs.find(params[:id])
+    if @bug.update_attributes(bug_params)
+      flash[:success] = "Bug updated."
+      redirect_to project_path(@project)
+    else 
+      flash.now[:danger] = "There was an error."
+      render :edit
     end
   end
   

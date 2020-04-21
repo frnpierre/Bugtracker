@@ -7,6 +7,9 @@
 
 <ul>
   <% @project.bugs.each do |bug| %>
-    <li><%= bug.description %></li>
+    <li>
+      <%= bug.description %>
+      <%= link_to "Edit", edit_project_bug_path(@project.id, bug) %>
+    </li>
   <% end %>
 </ul>

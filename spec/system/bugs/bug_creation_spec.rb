@@ -5,7 +5,7 @@ RSpec.describe "Bug creation", type: :system do
   let(:user) { create(:user) } 
   let(:project) { create(:project, user_id: user.id) } 
   
-  it "by a logged in user is possible" do 
+  it "by a logged in user is possible via project show page" do 
     sign_in(user)
     visit project_path(project)
     expect(current_path).to eq(project_path(project))

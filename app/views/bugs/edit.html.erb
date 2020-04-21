@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-8 offset-md-2">
+    <%= form_with model: [@project, @bug], local: true, html: { class: "needs-validation", novalidate: true } do |f| %>
+      <legend>Edit a bug</legend>
+      
+      <div class="form-group">
+        <%= f.label :description %>
+        <%= f.text_area :description, class: "form-control", required: true %>
+      </div>
+      
+      <div class="form-group">
+        <%= f.submit "Save changes", class: "btn btn-success"%>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('turbolinks:load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>

@@ -11,7 +11,6 @@ if Rails.env.development?
   user_1 = User.create(email: "test@example.com", password: "password")
   user_2 = User.create(email: "test2@example.com", password: "password")
   
-  # user_1 projects
   3.times do |n| 
     Project.create(name: "Project#{n}", user: user_1)
     Project.create(name: "Project#{n + 3}", user: user_2)
