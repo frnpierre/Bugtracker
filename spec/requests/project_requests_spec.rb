@@ -6,7 +6,7 @@ RSpec.describe "Projects requests", type: :request do
   let!(:project) { create(:project, name: "Requests tests project",
                                    user_id: user.id) }
   
-  describe "For a logged in user" do 
+  context "For a logged in user" do 
     
     before(:each) do 
       sign_in(user)
@@ -50,7 +50,7 @@ RSpec.describe "Projects requests", type: :request do
   end
   
   
-  describe "For a logged out user" do 
+  context "For a logged out user" do 
     
     it "can't access index" do 
       get projects_url
