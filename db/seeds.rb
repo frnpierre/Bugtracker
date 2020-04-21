@@ -8,6 +8,29 @@
 
 if Rails.env.development? 
   
-  User.create(email: "test@example.com", password: "password")
+  user_1 = User.create(email: "test@example.com", password: "password")
+  user_2 = User.create(email: "test2@example.com", password: "password")
   
+  # user_1 projects
+  3.times do |n| 
+    Project.create(name: "Project#{n}", user: user_1)
+    Project.create(name: "Project#{n + 3}", user: user_2)
+  end
+  
+  user_1.projects.each do |project|
+    5.times do |n|
+      Bug.create(description: "bug #{n} for #{project.name}", 
+                 project: project,
+                 user: user_1)
+    end
+  end
+    
+  user_2.projects.each do |project|
+    4.times do |n|
+      Bug.create(description: "bug #{n} for #{project.name}", 
+                 project: project,
+                 user: user_2)
+    end
+  end
+    
 end
