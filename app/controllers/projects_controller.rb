@@ -24,7 +24,7 @@ class ProjectsController < ApplicationController
       flash[:success] = "You created the project: #{@project.name}"
       redirect_to projects_path
     else 
-      flash.now[:error] = "There was something wrong."
+      flash.now[:danger] = "There was something wrong."
       render :new
     end
   end
@@ -46,7 +46,7 @@ class ProjectsController < ApplicationController
       flash[:success] = "Project #{@project.name} deleted"
       redirect_to projects_url 
     else 
-      flash[:error] = "There was an error"
+      flash[:danger] = "There was an error."
       redirect_to projects_url
     end
   end

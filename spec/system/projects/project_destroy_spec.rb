@@ -10,10 +10,10 @@ RSpec.describe "Project destroy", type: :system do
     sign_in(user)
     visit projects_path
     expect(current_path).to eq(projects_path)
-    expect(page).to have_selector("#project-#{project.id}")
-    page.find("#project-#{project.id}").click
+    expect(page).to have_selector("#delete-project-#{project.id}")
+    page.find("#delete-project-#{project.id}").click
     expect(Project.count).to eq(project_count - 1)
     expect(current_path).to eq(projects_path)
-    expect(page).not_to have_selector("#project-#{project.id}")
+    expect(page).not_to have_selector("#delete-project-#{project.id}")
   end
 end

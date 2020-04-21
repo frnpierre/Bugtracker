@@ -9,7 +9,10 @@
   <% @project.bugs.each do |bug| %>
     <li>
       <%= bug.description %>
-      <%= link_to "Edit", edit_project_bug_path(@project.id, bug) %>
+      <%= link_to "Edit", edit_project_bug_path(@project, bug) %>
+      <%= link_to "Delete", project_bug_path(@project, bug),
+                            method: :delete,
+                            id: "delete-bug-#{bug.id}" %>
     </li>
   <% end %>
 </ul>

@@ -34,6 +34,18 @@ class BugsController < ApplicationController
     end
   end
   
+  def destroy
+    @project = Project.find(params[:project_id])
+    @bug = @project.bugs.find(params[:id])
+    if @bug.destroy
+      flash[:success] = "Bug deleted."
+      redirect_to project_path(@project)
+    else 
+      flash[:danger] = "There was an error."
+      redirect_to project_path(@project)
+    end
+  end
+  
   private
   
     def bug_params
