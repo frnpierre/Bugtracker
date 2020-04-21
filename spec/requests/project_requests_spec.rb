@@ -88,7 +88,8 @@ RSpec.describe "Projects requests", type: :request do
       patch(project_url(project), params: { project: 
                                     { name: "Rejected edited project" }})
       expect(request).to redirect_to(new_user_session_path)
-      expect(Project.find_by(name: "Rejected edited project")).to be_nil
+      project.reload
+      expect(project).not_to have_attributes(name: "Rejected edited project")
     end
     
     it "can't access destroy" do 
