@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+  before_action :allow_only_owner, only: [:show, :edit, :update, :destroy]
+  
 
   def index
     @projects = Project.where(user: current_user)
@@ -55,4 +57,8 @@ class ProjectsController < ApplicationController
       params.require(:project).permit(:name).merge(user: current_user)
     end
     
+    def allow_only_owner
+      @project = Project.find(params[:id])
+      redirect_to root_url if current_user.id != @project.user_id
+    end
 end
