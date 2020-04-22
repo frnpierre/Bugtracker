@@ -46,6 +46,19 @@ class BugsController < ApplicationController
     end
   end
   
+  def update_solved_status
+    @bug = Bug.find(params[:id])
+    if @bug.solved?
+      @bug.mark_as_unsolved
+      flash[:success] = "Bug marked as unsolved."
+      redirect_to project_path(@bug.project)
+    else 
+      @bug.mark_as_solved
+      flash[:success] = "Bug marked as solved."
+      redirect_to project_path(@bug.project)
+    end
+  end
+  
   private
   
     def bug_params

@@ -8,6 +8,7 @@ class ProjectsController < ApplicationController
   
   def show
     @project = Project.find(params[:id])
+    @project_bugs = @project.bugs.order(:id)
   end
   
   def new
