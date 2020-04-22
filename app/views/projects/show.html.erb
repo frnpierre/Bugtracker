@@ -1,18 +1,63 @@
-<h1>Show project page</h1>
-
-<%= @project.name %>
-
-<h2>Bugs</h2>
-<%= link_to "Report Bug", new_project_bug_path(@project), class: "btn btn-primary" %>
-
-<ul>
-  <% @project.bugs.each do |bug| %>
-    <li>
-      <%= bug.description %>
-      <%= link_to "Edit", edit_project_bug_path(@project, bug) %>
-      <%= link_to "Delete", project_bug_path(@project, bug),
-                            method: :delete,
-                            id: "delete-bug-#{bug.id}" %>
-    </li>
-  <% end %>
-</ul>
+<div class="row">
+  <div class="col-md-8 offset-md-2">
+    <h1 class="top-page-title" align="center"><%= @project.name %></h1>
+    
+    <h2>Description</h2>
+    <p class="project-description"># project description to be added</p>
+    
+    <div class="row no-gutters align-items-center justify-content-between">
+      <h2 class="col-4">Bugs</h2>
+      <%= link_to "Report Bug", new_project_bug_path(@project), class: "btn btn-primary" %>
+    </div>
+    
+    <% @project.bugs.each do |bug| %>
+      <div id="accordion">
+        <div class="card">
+          <div class="card-header" id="heading<%= bug.id %>">
+            <h5 class="mb-0 bug-card-title">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= bug.id %>" aria-expanded="true" aria-controls="collapse<%= bug.id %>">
+                #Bug title to be added soon 
+              </button>
+            </h5>
+            <span class="bug-card-actions">
+              <%= link_to "Edit", edit_project_bug_path(@project, bug),
+                                  class: "btn-sm btn-info" %>
+              <%= link_to "Delete", project_bug_path(@project, bug),
+                                    method: :delete,
+                                    id: "delete-bug-#{bug.id}",
+                                    class: "btn-sm btn-danger", 
+                                    data: { confirm: "Are you sure?" } %>
+            </span>
+          </div>
+      
+          <div id="collapse<%= bug.id %>" class="collapse show" aria-labelledby="heading<%= bug.id %>" data-parent="#accordion">
+            <div class="card-body bug-card-body">
+              <h5>Description:</h5>
+              <p class="bug-description">
+                <%= bug.description %> <%= "a" * 150 %>
+              </p>
+              <h5 class="comments-title">Comments:</h5>
+              <div class="bug-comments">
+                <div class="bug-solo-comment">
+                  <p class="bug-comment-body">bla bla bla</p>
+                  <span class="comment-signature">-- By user name XX time ago.</span>
+                </div>
+                <div class="bug-solo-comment">
+                  <p class="bug-comment-body">bla bla bla</p>
+                  <span class="comment-signature">-- By user name XX time ago.</span>
+                </div>
+                <div class="bug-solo-comment">
+                  <p class="bug-comment-body">bla bla bla</p>
+                  <span class="comment-signature">-- By user name XX time ago.</span>
+                </div>
+                <div class="bug-solo-comment">
+                  <p class="bug-comment-body">bla bla bla</p>
+                  <span class="comment-signature">-- By user name XX time ago.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>

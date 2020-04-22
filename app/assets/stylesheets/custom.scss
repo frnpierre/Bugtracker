@@ -1,0 +1,48 @@
+.project-description {
+  margin-left: 32px;
+}
+
+.project-card {
+  margin-bottom: 16px;  
+}
+
+.project-card-title {
+  margin-bottom: 0;
+}
+
+.bug-card-title {
+  display: inline-block; 
+}
+
+.bug-card-body {
+  margin-left: 24px;
+  margin-right: 24px;
+  .bug-description {
+    margin-left: 16px;
+  }
+}
+
+.top-page-title {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+
+.bug-comments {
+  margin-left: 16px;
+  .bug-solo-comment {
+    border-bottom: 1px solid grey;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    &:last-child {
+      border: none;
+    }
+  }
+  .bug-comment-body {
+    margin-bottom: 0px;
+  }
+}
+
+// .bug-solo-comment:last-child {
+//   border: none;
+// }
