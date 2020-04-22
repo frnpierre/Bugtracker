@@ -20,8 +20,13 @@
               </button>
             </h5>
             <span class="bug-card-actions">
+              <%= link_to "Mark as solved", "#",
+                                    id: "solve-bug-#{bug.id}",
+                                    class: "btn-sm btn-success" %>
+                                    
               <%= link_to "Edit", edit_project_bug_path(@project, bug),
                                   class: "btn-sm btn-info" %>
+                                  
               <%= link_to "Delete", project_bug_path(@project, bug),
                                     method: :delete,
                                     id: "delete-bug-#{bug.id}",
