@@ -6,4 +6,5 @@ class User < ApplicationRecord
   
   has_many :projects
   has_many :bugs
+  has_many :comments
 end

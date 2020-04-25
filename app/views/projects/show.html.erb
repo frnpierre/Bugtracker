@@ -49,27 +49,42 @@
           <div id="collapse<%= bug.id %>" class="collapse" aria-labelledby="heading<%= bug.id %>" data-parent="#accordion">
             <div class="card-body bug-card-body">
               <h5>Description:</h5>
+              
               <p class="bug-description">
                 <%= bug.description %>
               </p>
+              
               <h5 class="comments-title">Comments:</h5>
+              
               <div class="bug-comments">
-                <div class="bug-solo-comment">
-                  <p class="bug-comment-body">bla bla bla</p>
-                  <span class="comment-signature">-- By user name XX time ago.</span>
-                </div>
-                <div class="bug-solo-comment">
-                  <p class="bug-comment-body">bla bla bla</p>
-                  <span class="comment-signature">-- By user name XX time ago.</span>
-                </div>
-                <div class="bug-solo-comment">
-                  <p class="bug-comment-body">bla bla bla</p>
-                  <span class="comment-signature">-- By user name XX time ago.</span>
-                </div>
-                <div class="bug-solo-comment">
-                  <p class="bug-comment-body">bla bla bla</p>
-                  <span class="comment-signature">-- By user name XX time ago.</span>
-                </div>
+                <% bug.comments.each do |comment| %>
+                  <div class="bug-solo-comment">
+                    <p class="bug-comment-body"><%= comment.content %></p>
+                    <span class="comment-signature">-- By user name XX time ago.</span>
+                  </div>
+                <% end %>
+              
+              </div> <!-- bug-comments -->
+              
+              <div class="comment-form-box">
+                <%= form_with model: @comment do |f| %>
+                  <h5>Add a comment</h5>
+                  
+                  <div class="form-group">
+                    <%= f.label :content, class: "d-none" %>
+                    <%= f.text_area :content, class: "form-control",
+                                              id: "bug-#{bug.id}-comment-content",
+                                              required: true,
+                                              placeholder: "Type your comment here" %>
+                  </div>
+                  
+                  <%= f.hidden_field :bug_id, value: bug.id %>
+                  <%= f.hidden_field :project_id, value: @project.id %>
+                  
+                  <div class="form-group">
+                    <%= f.submit "Comment", class: "btn btn-success float-right" %>
+                  </div>
+                <% end %>
               </div>
             </div>
           </div>
