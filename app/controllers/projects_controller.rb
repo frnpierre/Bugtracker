@@ -55,7 +55,7 @@ class ProjectsController < ApplicationController
   private
   
     def project_params
-      params.require(:project).permit(:name).merge(user: current_user)
+      params.require(:project).permit(:name, :description).merge(user: current_user)
     end
     
     def allow_only_owner
