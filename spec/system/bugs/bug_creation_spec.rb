@@ -13,11 +13,13 @@ RSpec.describe "Bug creation", type: :system do
     click_on("Report Bug")
     expect(current_path).to eq(new_project_bug_path(project))
     expect(project.bugs.count).to eq(0)
+    fill_in("bug_name", with: "Test bug name")
     fill_in("bug_description", with: "Test bug report n1")
     click_on("Report")
     expect(project.bugs.count).to eq(1)
     expect(page).to have_selector(".alert-success")
     expect(current_path).to eq(project_path(project))
     expect(page).to have_text("Test bug report n1")
+    expect(page).to have_text("Test bug name")
   end
 end

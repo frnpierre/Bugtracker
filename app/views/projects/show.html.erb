@@ -3,7 +3,7 @@
     <h1 class="top-page-title" align="center"><%= @project.name %></h1>
     
     <h2>Description</h2>
-    <p class="project-description"># project description to be added</p>
+    <p class="project-description"><%= @project.description %></p>
     
     <div class="row no-gutters align-items-center justify-content-between">
       <h2 class="col-4">Bugs</h2>
@@ -16,7 +16,7 @@
           <div class="card-header" id="heading<%= bug.id %>">
             <h5 class="mb-0 bug-card-title">
               <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= bug.id %>" aria-expanded="true" aria-controls="collapse<%= bug.id %>">
-                #Bug title to be added soon --- solved_status: <%= bug.solved %>
+                <%= bug.name %> --- solved_status: <%= bug.solved %>
               </button>
             </h5>
             <span class="bug-card-actions">
@@ -50,7 +50,7 @@
             <div class="card-body bug-card-body">
               <h5>Description:</h5>
               <p class="bug-description">
-                <%= bug.description %> <%= "a" * 150 %>
+                <%= bug.description %>
               </p>
               <h5 class="comments-title">Comments:</h5>
               <div class="bug-comments">
