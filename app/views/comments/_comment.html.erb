@@ -1,0 +1,6 @@
+<div class="bug-solo-comment">
+  <p class="bug-comment-body"><%= comment.content %></p>
+  <span class="comment-signature">
+    -- By <%= comment.user.email %>, <%= time_ago_in_words(comment.created_at) %> ago.
+  </span>
+</div>

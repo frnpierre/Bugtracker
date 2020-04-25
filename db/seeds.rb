@@ -18,9 +18,10 @@ if Rails.env.development?
   
   user_1.projects.each do |project|
     5.times do |n|
-      Bug.create(description: "bug #{n} for #{project.name}", 
-                project: project,
-                user: user_1)
+      Bug.create(name: "Bug #{n} name",
+                  description: "bug #{n} for #{project.name}", 
+                  project: project,
+                  user: user_1)
     end
   end
     

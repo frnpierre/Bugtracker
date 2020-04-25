@@ -56,15 +56,10 @@
               
               <h5 class="comments-title">Comments:</h5>
               
-              <div class="bug-comments">
-                <% bug.comments.each do |comment| %>
-                  <div class="bug-solo-comment">
-                    <p class="bug-comment-body"><%= comment.content %></p>
-                    <span class="comment-signature">-- By user name XX time ago.</span>
-                  </div>
-                <% end %>
-              
-              </div> <!-- bug-comments -->
+              <div class="bug-comments" id="bug-<%= bug.id %>-comments">
+                <!-- Uses partial _comment -->
+                <%= render bug.comments %>
+              </div>
               
               <div class="comment-form-box">
                 <%= form_with model: @comment do |f| %>
@@ -82,7 +77,7 @@
                   <%= f.hidden_field :project_id, value: @project.id %>
                   
                   <div class="form-group">
-                    <%= f.submit "Comment", class: "btn btn-success float-right" %>
+                    <%= f.submit "Comment", class: "btn btn-success float-right comment-button" %>
                   </div>
                 <% end %>
               </div>
