@@ -16,7 +16,7 @@ if Rails.env.development?
     User.create(username: user_name,
                   email: user_name + "@example.com",
                   password: "password")
-    end
+  end
   
   
   3.times do |n| 
@@ -29,21 +29,37 @@ if Rails.env.development?
   end
   
   user_1.projects.each do |project|
+    # At least one unsolved bug 
+      Bug.create(name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
+                  description: Faker::Lorem.paragraph, 
+                  project: project,
+                  user: user_1,
+                  solved: false)
+    # random solved/unsolved bugs
     5.times do |n|
       Bug.create(name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
                   description: Faker::Lorem.paragraph, 
                   project: project,
-                  
-                  user: user_1)
+                  user: user_1,
+                  solved: [true, false].sample)
     end
   end
     
   user_2.projects.each do |project|
+    # At least one unsolved bug 
+      Bug.create(name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
+                  description: Faker::Lorem.paragraph, 
+                  project: project,
+                  user: user_2,
+                  solved: false)
+                  
+    # random solved/unsolved bugs
     4.times do |n|
       Bug.create( name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
                   description: Faker::Lorem.paragraph, 
                   project: project,
-                  user: user_2)
+                  user: user_2,
+                  solved: [true, false].sample)
     end
   end
   

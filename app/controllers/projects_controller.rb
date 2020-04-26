@@ -8,7 +8,8 @@ class ProjectsController < ApplicationController
   
   def show
     @project = Project.find(params[:id])
-    @project_bugs = @project.bugs.order(:id).includes(:comments)
+    @project_solved_bugs = @project.bugs.where(solved: true).order(:id).includes(:comments)
+    @project_unsolved_bugs = @project.bugs.where(solved: false).order(:id).includes(:comments)
     @comment = Comment.new
   end
   
