@@ -7,4 +7,7 @@ class User < ApplicationRecord
   has_many :projects
   has_many :bugs
   has_many :comments
+  
+  has_many :team_memberships
+  has_many :allowed_projects, through: :team_memberships, source: :project
 end
