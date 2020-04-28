@@ -1,5 +1,7 @@
 class TeamMembershipsController < ApplicationController
   
+  before_action :allow_only_owner, only: [:new, :create, :destroy]
+  
   def new
     @project = Project.find(params[:project_id])
     @users = User.select { |user| user.id != current_user.id && !@project.allowed_user_ids.include?(user.id) }
@@ -29,4 +31,11 @@ class TeamMembershipsController < ApplicationController
       redirect_to project_path(@team_membership.project)
     end
   end
+  
+  private 
+  
+    def allow_only_owner
+      @project = Project.find(params[:project_id]) || TeamMembership.find(params[:id]).project
+      redirect_to root_url if current_user.id != @project.user_id
+    end
 end
