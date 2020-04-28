@@ -68,7 +68,9 @@ if Rails.env.development?
     allowed_users_arr = (3..10).to_a.sample(3)
     
     # team memberships for this project
-    TeamMembership.create(project_id: project.id, user_id: allowed_users_arr.sample)
+    allowed_users_arr.each do |allowed_user| 
+      TeamMembership.create(project_id: project.id, user_id: allowed_user)
+    end
     
     # At least one unsolved bug by owner
     Bug.create(name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
