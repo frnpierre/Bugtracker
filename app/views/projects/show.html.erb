@@ -17,10 +17,15 @@
         (They can report bugs and comment)
       </p>
         <ul class="list-group" id="team-user-list">
-          <% @project.allowed_users.each do |allowed_user| %>
+          
+          
+          <% @project.team_memberships.each do |membership| %>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              <%= allowed_user.username %> - <%= allowed_user.email %>
-              <%= link_to "remove", "#", class: "btn btn-sm btn-danger" %>
+              <%= membership.user.username %> - <%= membership.user.email %>
+              <%= link_to "remove", project_team_membership_path(@project, membership),
+                                    class: "btn btn-sm btn-danger", 
+                                    method: :delete,
+                                    confirm: "Are you sure?" %>
             </li>
           <% end %>
         </ul>

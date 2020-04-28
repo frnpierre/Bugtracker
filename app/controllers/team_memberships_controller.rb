@@ -19,4 +19,14 @@ class TeamMembershipsController < ApplicationController
     end
   end
   
+  def destroy
+    @team_membership = TeamMembership.find(params[:id])
+    if @team_membership.delete
+      flash[:success] = "#{@team_membership.user.username} was removed from this project."
+      redirect_to project_path(@team_membership.project)
+    else 
+      flash[:error] = "There was an error."
+      redirect_to project_path(@team_membership.project)
+    end
+  end
 end
