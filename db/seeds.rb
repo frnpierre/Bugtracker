@@ -29,45 +29,71 @@ if Rails.env.development?
   end
   
   user_1.projects.each do |project|
-    # At least one unsolved bug 
-      Bug.create(name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
+    # random 3 allowed users ids array
+    allowed_users_arr = (2..10).to_a.sample(3)
+    
+    # team memberships for this project
+    allowed_users_arr.each do |allowed_user| 
+      TeamMembership.create(project_id: project.id, user_id: allowed_user)
+    end
+    
+    # At least one unsolved bug by owner
+    Bug.create(name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
+                description: Faker::Lorem.paragraph, 
+                project: project,
+                user: user_1,
+                solved: false)
+                
+    # 2 Unsolved bugs by random team members
+    2.times do |n|
+      Bug.create( name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
                   description: Faker::Lorem.paragraph, 
                   project: project,
-                  user: user_1,
+                  user: project.allowed_users.sample,
                   solved: false)
-    # random solved/unsolved bugs
-    5.times do |n|
-      Bug.create(name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
+    end
+    
+    # 2 Solved bugs by random team members
+    2.times do |n|
+      Bug.create( name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
                   description: Faker::Lorem.paragraph, 
                   project: project,
-                  user: user_1,
-                  solved: [true, false].sample)
+                  user: project.allowed_users.sample,
+                  solved: true)
     end
   end
     
   user_2.projects.each do |project|
-    # At least one unsolved bug 
+    # random 3 allowed users array
+    allowed_users_arr = (3..10).to_a.sample(3)
+    
+    # team memberships for this project
+    TeamMembership.create(project_id: project.id, user_id: allowed_users_arr.sample)
+    
+    # At least one unsolved bug by owner
+    Bug.create(name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
+                description: Faker::Lorem.paragraph, 
+                project: project,
+                user: user_2,
+                solved: false)
+                  
+    # random solved/unsolved bugs by random team members
+    5.times do |n|
       Bug.create(name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
                   description: Faker::Lorem.paragraph, 
                   project: project,
-                  user: user_2,
-                  solved: false)
-                  
-    # random solved/unsolved bugs
-    4.times do |n|
-      Bug.create( name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
-                  description: Faker::Lorem.paragraph, 
-                  project: project,
-                  user: user_2,
+                  user: project.allowed_users.sample,
                   solved: [true, false].sample)
     end
   end
   
+  
+  # Random number of comments on all bugs, by random team members
   Bug.all.each do |bug|
-    n_comments = rand(0..3)
+    n_comments = rand(1..4)
     n_comments.times do |n|
       Comment.create( content: Faker::Lorem.paragraph,
-                        user_id: rand(1..4),
+                        user_id: bug.project.allowed_users.sample.id,
                         bug_id: bug.id)
     end
     
