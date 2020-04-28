@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-md-8 offset-md-2">
+    <h2>Add a user to project: <%= @project.name %></h2>
+    
+    <h4>List of users</h4>
+    
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Username</th>
+          <th scope="col">Email</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.username %></th>
+            <td><%= user.email %></td>
+            <td>
+              <%= link_to "Add", project_team_memberships_path(@project, user_id: user.id),
+                                  method: :post  %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table> 
+  </div>
+</div>
+

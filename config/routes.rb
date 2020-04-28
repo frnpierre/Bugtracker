@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'static_pages#home'
   resources :projects do 
     resources :bugs, except: [:index, :show]
+    resources :team_memberships, only: [:new, :create]
   end
   
   patch "bug/:id", to: "bugs#update_solved_status", as: "update_bug_solved_status"

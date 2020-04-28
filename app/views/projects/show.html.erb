@@ -6,11 +6,33 @@
     <p class="project-description"><%= @project.description %></p>
     
     <div class="row no-gutters align-items-center justify-content-between">
+      <h2 class="col-4">Team</h2>
+      <%= link_to "Add user", new_project_team_membership_path(@project),
+                              class: "btn btn-primary" %>
+    </div>
+    
+    <div id="project-team-list">
+      <p>
+        These users have access to this project: <br/>
+        (They can report bugs and comment)
+      </p>
+        <ul class="list-group" id="team-user-list">
+          <% @project.allowed_users.each do |allowed_user| %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <%= allowed_user.username %> - <%= allowed_user.email %>
+              <%= link_to "remove", "#", class: "btn btn-sm btn-danger" %>
+            </li>
+          <% end %>
+        </ul>
+    </div>
+        
+    
+    <div class="row no-gutters align-items-center justify-content-between">
       <h2 class="col-4">Bugs</h2>
       <%= link_to "Report Bug", new_project_bug_path(@project), class: "btn btn-primary" %>
     </div>
     
-    <h4>Unsolved: </h4>
+    <h4 class="solved-status-title">Unsolved: </h4>
     
     <% @project_unsolved_bugs.each do |bug| %>
       <div id="accordion">
@@ -88,7 +110,7 @@
         </div>
     <% end %>
     
-    <h4 id="solved-bugs-title">Solved</h4>
+    <h4 id="solved-bugs-title" class="solved-status-title">Solved</h4>
     <% @project_solved_bugs.each do |bug| %>
       <div id="accordion">
         <div class="card">
