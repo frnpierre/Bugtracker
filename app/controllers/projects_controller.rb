@@ -1,9 +1,10 @@
 class ProjectsController < ApplicationController
-  before_action :allow_only_owner, only: [:show, :edit, :update, :destroy]
+  before_action :allow_only_owner, only: [:edit, :update, :destroy]
+  before_action :allow_only_team, only: [:show]
   
 
   def index
-    @projects = Project.where(user: current_user)
+    @projects = Project.where(user: current_user) + current_user.allowed_projects
   end
   
   def show
@@ -63,5 +64,14 @@ class ProjectsController < ApplicationController
     def allow_only_owner
       @project = Project.find(params[:id])
       redirect_to root_url if current_user.id != @project.user_id
+    end
+    
+    def allow_only_team
+      @project = Project.find(params[:id])
+      allowed_team_ids = @project.allowed_user_ids << @project.user_id
+      if !allowed_team_ids.include?(current_user.id)
+        flash[:error] = "You're not allowed to access this project."
+        redirect_to root_url 
+      end
     end
 end

@@ -10,6 +10,11 @@ RSpec.describe "Project index", type: :system do
   let!(:project_other) { create(:project, name: "Project of user two", 
                                           user: user_two ) } 
   
+  let!(:project_with_team) { create(:project, name: "Project with user in his team", 
+                                             user: user_two,
+                                             allowed_users: [user]) } 
+  
+  
   it "lists the current user projects" do 
     sign_in(user)
     visit projects_path
@@ -18,7 +23,14 @@ RSpec.describe "Project index", type: :system do
     expect(page).to have_link(project_two.name, href: project_path(project_two))
   end
   
-  it "doesn't list other users' projects" do 
+  it "lists the projects you are part of the team" do
+    sign_in(user)
+    visit projects_path
+    expect(current_path).to eq(projects_path)
+    expect(page).to have_link(project_with_team.name, href: project_path(project_with_team))
+  end
+  
+  it "doesn't list other users' projects if not part of the team" do 
     sign_in(user)
     visit projects_path
     expect(current_path).to eq(projects_path)

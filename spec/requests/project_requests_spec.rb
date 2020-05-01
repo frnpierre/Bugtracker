@@ -8,7 +8,10 @@ RSpec.describe "Projects requests", type: :request do
                                     user: user) }
   let!(:project_two) { create(:project, name: "RT project two",
                                        user: user_two ) }
-    
+  
+  let!(:project_with_team) { create(:project, name: "Project with user in his team", 
+                                              user: user_two,
+                                              allowed_users: [user]) } 
   
   context "For a logged in user" do 
     
@@ -21,7 +24,7 @@ RSpec.describe "Projects requests", type: :request do
       expect(response).to have_http_status(200)
     end
     
-    it "can access show" do 
+    it "can access show of a project you own" do 
       get project_url(project)
       expect(response).to have_http_status(200)
     end
@@ -31,7 +34,7 @@ RSpec.describe "Projects requests", type: :request do
       expect(response).to have_http_status(200)
     end
     
-    it "can access edit" do 
+    it "can access edit of a project you own" do 
       get edit_project_url(project)
       expect(response).to have_http_status(200)
     end
@@ -42,14 +45,14 @@ RSpec.describe "Projects requests", type: :request do
       expect(Project.find_by(name: "Accepted project")).not_to be_nil
     end
     
-    it "can access update" do 
+    it "can access update of a project you own" do 
       patch(project_url(project), params: { project: 
                                     { name: "Accepted edited project" }})
       project.reload
       expect(project).to have_attributes(name: "Accepted edited project")
     end
     
-    it "can access destroy" do 
+    it "can access destroy of a project you own" do 
       expect { delete(project_url(project)) }.to change { Project.count }.by(-1)
     end
   end
@@ -105,7 +108,12 @@ RSpec.describe "Projects requests", type: :request do
       sign_in(user)
     end
     
-    it "can't access another user's projects#show" do 
+    it "can access another user's project#show if you are in the team" do 
+      get project_url(project_with_team)
+      expect(response).to have_http_status(200)
+    end
+    
+    it "can't access another user's projects#show if you are not in the team" do 
       get project_url(project_two)
       expect(request).to redirect_to(root_url)
     end
