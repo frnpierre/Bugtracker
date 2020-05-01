@@ -3,7 +3,10 @@
     <h1 class="top-page-title" align="center"><%= @project.name %></h1>
     
     <h2>Description</h2>
-    <p class="project-description"><%= @project.description %></p>
+    <p class="project-description">
+      <%= @project.description %> <br/><br/>
+      <%= project_ownership(@project) %>
+    </p>
     
     <div class="row no-gutters align-items-center justify-content-between">
       <h2 class="col-4">Team</h2>
