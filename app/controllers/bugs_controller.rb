@@ -1,4 +1,5 @@
 class BugsController < ApplicationController
+  before_action :allow_only_team, only: [:new, :create]
   
   def new
     @project = Project.find(params[:project_id])
@@ -63,5 +64,14 @@ class BugsController < ApplicationController
   
     def bug_params
       params.require(:bug).permit(:name, :description).merge(user: current_user)
+    end
+    
+    def allow_only_team
+      @project = Project.find(params[:project_id])
+      allowed_team_ids = @project.allowed_user_ids << @project.user_id
+      if !allowed_team_ids.include?(current_user.id)
+        flash[:error] = "You're not allowed to access this project."
+        redirect_to root_url 
+      end
     end
 end
