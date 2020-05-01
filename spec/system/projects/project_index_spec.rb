@@ -3,12 +3,12 @@ require "rails_helper"
 RSpec.describe "Project index", type: :system do 
   
   let(:user) { create(:user) }
-  let!(:project_one) { create(:project, name: "Project one", user_id: user.id) } 
-  let!(:project_two) { create(:project, name: "Project two", user_id: user.id) } 
+  let!(:project_one) { create(:project, name: "Project one", user: user) } 
+  let!(:project_two) { create(:project, name: "Project two", user: user) } 
   
   let(:user_two) { create(:user) } 
   let!(:project_other) { create(:project, name: "Project of user two", 
-                                          user_id: user_two.id ) } 
+                                          user: user_two ) } 
   
   it "lists the current user projects" do 
     sign_in(user)

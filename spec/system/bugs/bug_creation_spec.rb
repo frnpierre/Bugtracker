@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Bug creation", type: :system do 
   
   let(:user) { create(:user) } 
-  let(:project) { create(:project, user_id: user.id) } 
+  let(:project) { create(:project, user: user) } 
   
   it "by a logged in user is possible via project show page" do 
     sign_in(user)

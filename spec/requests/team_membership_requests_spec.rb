@@ -24,9 +24,9 @@ RSpec.describe "Team membership requests", type: :request do
                                     
   # memberships              
     # project that user owns has user_two in its team 
-  let!(:membership_p_three) { TeamMembership.create(project_id: project_three.id, user_id: user_two.id ) }
+  let!(:membership_p_three) { TeamMembership.create(project: project_three, user: user_two ) }
     # project that user doesn't owns has user_three in its team
-  let!(:membership_p_two) { TeamMembership.create(project_id: project_two.id, user_id: user_three.id ) }
+  let!(:membership_p_two) { TeamMembership.create(project: project_two, user: user_three ) }
   
   context "For a logged in user" do 
     

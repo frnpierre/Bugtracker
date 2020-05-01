@@ -4,10 +4,10 @@ RSpec.describe "Bugs requests", type: :request do
   
   let(:user) { create(:user) }
   let!(:project) { create(:project, name: "Requests tests project",
-                                    user_id: user.id) }
+                                    user: user) }
   let!(:bug) { create(:bug, description: "Requests tests bug",
-                            project_id: project.id,
-                            user_id: user.id ) }
+                            project: project,
+                            user: user ) }
   
   context "For a logged in user" do 
     

@@ -3,12 +3,12 @@ require "rails_helper"
 RSpec.describe "Bug solved status", type: :system do
   
   let(:user) { create(:user) }
-  let!(:project) { create(:project, user_id: user.id) }
+  let!(:project) { create(:project, user: user) }
   let!(:bug_unsolved) { create(:bug, description: "Bug description to solve",
-                            project_id: project.id, user_id: user.id,
+                            project: project, user: user,
                             solved: false) }
   let!(:bug_solved) { create(:bug, description: "Bug description to unsolve",
-                            project_id: project.id, user_id: user.id,
+                            project: project, user: user,
                             solved: true) }
   
   it "can be set to solved by a logged in user" do 

@@ -5,9 +5,9 @@ RSpec.describe "Projects requests", type: :request do
   let(:user) { create(:user) }
   let(:user_two) { create(:user) }
   let!(:project) { create(:project, name: "Requests tests project",
-                                    user_id: user.id) }
+                                    user: user) }
   let!(:project_two) { create(:project, name: "RT project two",
-                                       user_id: user_two.id ) }
+                                       user: user_two ) }
     
   
   context "For a logged in user" do 

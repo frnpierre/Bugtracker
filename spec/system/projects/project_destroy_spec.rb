@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Project destroy", type: :system do 
   
   let(:user) { create(:user) } 
-  let!(:project) { create(:project, user_id: user.id) } 
+  let!(:project) { create(:project, user: user) } 
   
   it "by a logged in user is possible via the index page" do 
     project_count = Project.count

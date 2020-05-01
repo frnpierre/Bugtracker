@@ -3,9 +3,9 @@ require "rails_helper"
 RSpec.describe "Bug destroy", type: :system do 
   
   let(:user) { create(:user) }
-  let!(:project) { create(:project, user_id: user.id) }
+  let!(:project) { create(:project, user: user) }
   let!(:bug) { create(:bug, description: "Bug description to destroy",
-                            project_id: project.id, user_id: user.id) }
+                            project: project, user: user) }
 
   it "by a logged in user is possible" do
     bug_count = Bug.count

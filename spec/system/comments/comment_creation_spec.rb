@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe "Comment creation", type: :system do 
   
   let(:user) { create(:user) } 
-  let!(:project) { create(:project, user_id: user.id) } 
-  let!(:bug) { create(:bug, user_id: user.id, project_id: project.id,
+  let!(:project) { create(:project, user: user) } 
+  let!(:bug) { create(:bug, user: user, project: project,
                            name: "Bug name to be commented",
                            description: "Bug description to be commented") }
   

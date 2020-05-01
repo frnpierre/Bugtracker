@@ -4,10 +4,10 @@ RSpec.describe Bug, type: :model do
   
   let(:user) { create(:user) }
   let(:project) { create(:project, name: "Model bug project name",
-                                  user_id: user.id) }
+                                  user: user) }
   let!(:bug) { create(:bug, description: "Model bug test",
-                                  project_id: project.id,
-                                  user_id: user.id) }
+                                  project: project,
+                                  user: user) }
   
   it "A new record should have a solved status of false" do 
     expect(bug.solved).to be_falsy
