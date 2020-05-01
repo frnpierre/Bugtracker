@@ -19,15 +19,33 @@ RSpec.describe "Project index", type: :system do
     sign_in(user)
     visit projects_path
     expect(current_path).to eq(projects_path)
+    # title links
     expect(page).to have_link(project_one.name, href: project_path(project_one))
     expect(page).to have_link(project_two.name, href: project_path(project_two))
+    # show links
+    expect(page).to have_link("Show", href: project_path(project_one))
+    expect(page).to have_link("Show", href: project_path(project_two))
+    # edit links
+    expect(page).to have_link("Edit", href: edit_project_path(project_one))
+    expect(page).to have_link("Edit", href: edit_project_path(project_two))
+    # delete links
+    expect(page).to have_link("Delete", href: project_path(project_one))
+    expect(page).to have_link("Delete", href: project_path(project_two))
+    
   end
   
   it "lists the projects you are part of the team" do
     sign_in(user)
     visit projects_path
     expect(current_path).to eq(projects_path)
+    # title link
     expect(page).to have_link(project_with_team.name, href: project_path(project_with_team))
+    # show links
+    expect(page).to have_link("Show", href: project_path(project_with_team))
+    # no edit links
+    expect(page).not_to have_link("Edit", href: edit_project_path(project_with_team))
+    # no delete links
+    expect(page).not_to have_link("Delete", href: project_path(project_with_team))
   end
   
   it "doesn't list other users' projects if not part of the team" do 
