@@ -10,8 +10,12 @@
     
     <div class="row no-gutters align-items-center justify-content-between">
       <h2 class="col-4">Team</h2>
-      <%= link_to "Add user", new_project_team_membership_path(@project),
-                              class: "btn btn-primary" %>
+      
+      <!-- Only project owner can see the Add user button -->
+      <% if current_user.id == @project.user_id %>
+        <%= link_to "Add user", new_project_team_membership_path(@project),
+                                class: "btn btn-primary" %>
+      <% end %>
     </div>
     
     <div id="project-team-list">
@@ -25,10 +29,14 @@
           <% @project.team_memberships.each do |membership| %>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <%= membership.user.username %> - <%= membership.user.email %>
-              <%= link_to "remove", project_team_membership_path(@project, membership),
-                                    class: "btn btn-sm btn-danger", 
-                                    method: :delete,
-                                    confirm: "Are you sure?" %>
+              
+              <!-- Only project owner can see the remove user button -->
+              <% if current_user.id == @project.user_id %>
+                <%= link_to "remove", project_team_membership_path(@project, membership),
+                                      class: "btn btn-sm btn-danger", 
+                                      method: :delete,
+                                      confirm: "Are you sure?" %>
+              <% end %>
             </li>
           <% end %>
         </ul>
