@@ -9,8 +9,8 @@ RSpec.describe "Bugs requests", type: :request do
   let!(:project) { create(:project, name: "Requests tests project",
                                     user: user) }
   let!(:project_with_team) { create(:project, name: "Project with user in the team",
-                                             user: user_two,
-                                             allowed_users: [user]) }
+                                              user: user_two,
+                                              allowed_users: [user]) }
                                              
   let!(:bug) { create(:bug, description: "Requests tests bug",
                             project: project,
@@ -31,7 +31,7 @@ RSpec.describe "Bugs requests", type: :request do
       expect(response).to have_http_status(200)
     end
     
-    it "can access edit for a project you own" do 
+    it "can access edit for a bug you own" do 
       get edit_project_bug_url(project, bug)
       expect(response).to have_http_status(200)
     end
@@ -42,14 +42,14 @@ RSpec.describe "Bugs requests", type: :request do
       expect(Bug.find_by(description: "Accepted bug")).not_to be_nil
     end
     
-    it "can access update for a project you own" do
+    it "can access update for a bug you own" do
       patch(project_bug_url(project, bug), params: { bug: 
                                             { description: "Accepted bug edited" }})
       bug.reload                                            
       expect(bug).to have_attributes(description: "Accepted bug edited")
     end
     
-    it "can access destroy for a project you own" do 
+    it "can access destroy for bug you own" do 
       expect { delete(project_bug_url(project, bug)) }.to change { Bug.count }.by(-1)
     end
   end
@@ -85,6 +85,7 @@ RSpec.describe "Bugs requests", type: :request do
     it "can't access destroy" do 
       delete(project_bug_url(project, bug))
       expect(request).to redirect_to(new_user_session_path)
+      bug.reload
       expect(Bug.find_by(description: bug.description)).not_to be_nil
     end
   end
@@ -146,6 +147,18 @@ RSpec.describe "Bugs requests", type: :request do
       bug_from_team.reload                                            
       expect(bug_from_team).not_to have_attributes(description: "Rejected bug edited")
     end
-      
+    
+    it "can access destroy on another user's bug if you are owner of the project" do 
+      sign_in(user_two)
+      expect { delete(project_bug_url(project_with_team, bug_from_team)) }.to change { Bug.count }.by(-1)
+    end
+    
+    it "can't access destroy of another user's bug" do 
+      sign_in(user_without_team)
+      delete(project_bug_url(project_with_team, bug_from_team))
+      expect(request).to redirect_to(root_url)
+      bug_from_team.reload
+      expect(Bug.find_by(description: bug_from_team.description)).not_to be_nil
+    end
   end
 end

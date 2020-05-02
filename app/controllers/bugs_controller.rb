@@ -1,6 +1,6 @@
 class BugsController < ApplicationController
   before_action :allow_only_team, only: [:new, :create]
-  before_action :allow_only_owners, only: [:edit, :update]
+  before_action :allow_only_owners, only: [:edit, :update, :destroy]
   
   def new
     @project = Project.find(params[:project_id])
