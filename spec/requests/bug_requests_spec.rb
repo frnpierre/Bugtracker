@@ -14,7 +14,7 @@ RSpec.describe "Bugs requests", type: :request do
                                              
   let!(:bug) { create(:bug, description: "Requests tests bug",
                             project: project,
-                            user: user ) }
+                            user: user) }
                             
   let!(:bug_from_team) { create(:bug, description: "Requests tests bug",
                                       project: project_with_team,
@@ -52,6 +52,13 @@ RSpec.describe "Bugs requests", type: :request do
     it "can access destroy for bug you own" do 
       expect { delete(project_bug_url(project, bug)) }.to change { Bug.count }.by(-1)
     end
+    
+    it "can access update_solved_status for a bug you own" do
+      expect(bug.solved).to be_falsy
+      patch(update_bug_solved_status_url(bug))
+      bug.reload
+      expect(bug.solved).to be_truthy
+    end
   end
   
   
@@ -87,6 +94,13 @@ RSpec.describe "Bugs requests", type: :request do
       expect(request).to redirect_to(new_user_session_path)
       bug.reload
       expect(Bug.find_by(description: bug.description)).not_to be_nil
+    end
+    
+    it "can't access update_solved_status" do
+      expect(bug.solved).to be_falsy
+      patch(update_bug_solved_status_url(bug))
+      bug.reload
+      expect(bug.solved).to be_falsy
     end
   end
   
@@ -159,6 +173,22 @@ RSpec.describe "Bugs requests", type: :request do
       expect(request).to redirect_to(root_url)
       bug_from_team.reload
       expect(Bug.find_by(description: bug_from_team.description)).not_to be_nil
+    end
+    
+    it "can access update_solved_status of another user's bug if you are owner of the project" do
+      sign_in(user_two)      
+      expect(bug_from_team.solved).to be_falsy
+      patch(update_bug_solved_status_url(bug_from_team))
+      bug_from_team.reload
+      expect(bug_from_team.solved).to be_truthy
+    end
+    
+    it "can't access update_solved_status of another user's bug" do
+      sign_in(user_without_team)      
+      expect(bug_from_team.solved).to be_falsy
+      patch(update_bug_solved_status_url(bug_from_team))
+      bug_from_team.reload
+      expect(bug_from_team.solved).to be_falsy
     end
   end
 end

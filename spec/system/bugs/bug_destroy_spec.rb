@@ -18,7 +18,7 @@ RSpec.describe "Bug destroy", type: :system do
                                       user: user) }
 
 
-  it "by a logged in user is possible" do
+  it "by a logged in user that owns it is possible" do
     bug_count = Bug.count
     sign_in(user)
     visit project_path(project)
