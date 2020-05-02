@@ -15,6 +15,10 @@ RSpec.describe "Bugs requests", type: :request do
   let!(:bug) { create(:bug, description: "Requests tests bug",
                             project: project,
                             user: user ) }
+                            
+  let!(:bug_from_team) { create(:bug, description: "Requests tests bug",
+                                      project: project_with_team,
+                                      user: user ) }
   
   context "For a logged in user" do 
     
@@ -114,5 +118,34 @@ RSpec.describe "Bugs requests", type: :request do
       expect(Bug.find_by(description: "Rejected bug")).to be_nil
     end
     
+    it "can access edit of another user's bug if you are owner of the project" do
+      sign_in(user_two)
+      get edit_project_bug_url(project_with_team, bug_from_team)
+      expect(response).to have_http_status(200)
+    end
+    
+    it "can't access edit of another user's bug" do 
+      sign_in(user_without_team)
+      get edit_project_bug_url(project_with_team, bug_from_team)
+      expect(request).to redirect_to(root_url)
+    end
+    
+    it "can access update of another user's bug if you are owner of the project" do 
+      sign_in(user_two)
+      patch(project_bug_url(project_with_team, bug_from_team), params: { bug: 
+                                            { description: "Accepted bug edited" }})
+      bug_from_team.reload                                            
+      expect(bug_from_team).to have_attributes(description: "Accepted bug edited")
+    end
+    
+    it "can't access update of another user's bug" do 
+      sign_in(user_without_team)
+      patch(project_bug_url(project_with_team, bug_from_team), params: { bug: 
+                                            { description: "Rejected bug edited" }})
+      expect(request).to redirect_to(root_url)
+      bug_from_team.reload                                            
+      expect(bug_from_team).not_to have_attributes(description: "Rejected bug edited")
+    end
+      
   end
 end

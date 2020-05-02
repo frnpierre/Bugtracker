@@ -1,5 +1,6 @@
 class BugsController < ApplicationController
   before_action :allow_only_team, only: [:new, :create]
+  before_action :allow_only_owners, only: [:edit, :update]
   
   def new
     @project = Project.find(params[:project_id])
@@ -72,6 +73,15 @@ class BugsController < ApplicationController
       if !allowed_team_ids.include?(current_user.id)
         flash[:error] = "You're not allowed to access this project."
         redirect_to root_url 
+      end
+    end
+    
+    def allow_only_owners
+      @project = Project.find(params[:project_id])
+      @bug = @project.bugs.find(params[:id])
+      if current_user.id != @project.user_id && current_user.id != @bug.user_id
+        flash[:error] = "You're not allowed to access this bug."
+        redirect_to root_url
       end
     end
 end

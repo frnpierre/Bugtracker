@@ -74,10 +74,10 @@
                             class: "btn-sm btn-success" %>
               <% end %>
               
-                                    
-              <%= link_to "Edit", edit_project_bug_path(@project, bug),
-                                  class: "btn-sm btn-info" %>
-                                  
+              <% if current_user.id == @project.user_id || current_user.id == bug.user_id %>
+                <%= link_to "Edit", edit_project_bug_path(@project, bug),
+                                    class: "btn-sm btn-info" %>
+              <% end %>
               <%= link_to "Delete", project_bug_path(@project, bug),
                                     method: :delete,
                                     id: "delete-bug-#{bug.id}",
