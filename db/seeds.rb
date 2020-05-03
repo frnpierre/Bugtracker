@@ -19,7 +19,7 @@ if Rails.env.development?
   end
   
   
-  3.times do |n| 
+  2.times do |n| 
     Project.create(name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
                     description: Faker::Lorem.paragraph,
                     user: user_1)
@@ -89,6 +89,16 @@ if Rails.env.development?
     end
   end
   
+  # user 2 has user 1 in the team of his first project
+  TeamMembership.create(project_id: user_2.project_ids.first, user_id: user_1.id)
+    # and user 1 has one unsolved bug reported on this project
+  Bug.create(name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
+                  description: Faker::Lorem.paragraph, 
+                  project_id: user_2.project_ids.first,
+                  user: user_1,
+                  solved: false)
+  
+  
   
   # Random number of comments on all bugs, by random team members
   Bug.all.each do |bug|
@@ -100,4 +110,6 @@ if Rails.env.development?
     end
     
   end
+  
+  
 end
