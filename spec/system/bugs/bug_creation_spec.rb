@@ -31,8 +31,6 @@ RSpec.describe "Bug creation", type: :system do
   end
   
   it "is possible on a project you're part of the team" do
-    # go project with team page
-    # add a bug on it, should work
     sign_in(user)
     visit project_path(project_with_team)
     expect(current_path).to eq(project_path(project_with_team))

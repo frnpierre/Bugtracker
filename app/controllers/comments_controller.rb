@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_action :allow_only_team
   
   def create
     @project = Project.find(params[:comment][:project_id])
@@ -27,5 +28,14 @@ class CommentsController < ApplicationController
   
     def comment_params
       params.require(:comment).permit(:content, :bug_id).merge(user_id: current_user.id)
+    end
+    
+    def allow_only_team
+      @project = Project.find(params[:comment][:project_id])
+      allowed_team_ids = @project.allowed_user_ids << @project.user_id
+      if !allowed_team_ids.include?(current_user.id)
+        flash[:error] = "You're not allowed to comment on this bug."
+        redirect_to root_url 
+      end
     end
 end
