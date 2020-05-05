@@ -3,7 +3,6 @@
     <%= form_with model: [@project, @bug], local: true, html: { class: "needs-validation", novalidate: true } do |f| %>
       <legend>Report a bug on project: <%= @project.name %></legend>
       
-      
       <div class="form-group">
         <%= f.label :name %>
         <%= f.text_field :name, class: "form-control", required: true %>
@@ -15,7 +14,6 @@
         <%= f.text_area :description, class: "form-control", required: true %>
         <%= render "shared/new_form_validations" %>
       </div>
-      
       
       <div class="form-group">
         <%= f.submit "Report", class: "btn btn-success"%>
