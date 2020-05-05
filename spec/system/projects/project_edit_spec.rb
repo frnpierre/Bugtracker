@@ -13,10 +13,12 @@ RSpec.describe "Project edit", type: :system do
     find("a[href='#{edit_project_path(project)}']").click
     expect(current_path).to eq(edit_project_path(project))
     fill_in("project_name", with: "Edited Testproject")
+    fill_in("project_description", with: "Edited description")
     click_on("Save")
     expect(current_path).to eq(projects_path)
     expect(page).to have_selector(".alert-success")
     expect(page).to have_text("Edited Testproject")
+    expect(page).to have_text("Edited description")
   end
 
   it "is not accessible to a logged out user" do 
