@@ -16,7 +16,8 @@
             <%= project.description %>
           </p>
           
-          <p class="project-owner"><%= project_ownership(project) %></p>
+          <%= project_ownership(project) %>
+          
         </div>
         <div class="card-footer">
           <%= link_to "Show", project_path(project), class: "btn btn-primary" %>
