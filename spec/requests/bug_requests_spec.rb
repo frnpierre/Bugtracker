@@ -38,8 +38,9 @@ RSpec.describe "Bugs requests", type: :request do
     
     it "can access create for a project you own" do 
       post(project_bugs_url(project), params: { bug: 
-                                        { description: "Accepted bug" }})
-      expect(Bug.find_by(description: "Accepted bug")).not_to be_nil
+                                        { name: "Accepted bug",
+                                          description: "Accepted bug required description"}})
+      expect(Bug.find_by(name: "Accepted bug")).not_to be_nil
     end
     
     it "can access update for a bug you own" do
@@ -121,8 +122,9 @@ RSpec.describe "Bugs requests", type: :request do
     it "can access create if you are part of the team" do
       sign_in(user)
       post(project_bugs_url(project_with_team), params: { bug: 
-                                        { description: "Accepted bug" }})
-      expect(Bug.find_by(description: "Accepted bug")).not_to be_nil
+                                        { name: "Accepted bug", 
+                                          description: "Accepted bug required description" }})
+      expect(Bug.find_by(name: "Accepted bug")).not_to be_nil
     end
     
     it "can't access create if you are not in the team" do
