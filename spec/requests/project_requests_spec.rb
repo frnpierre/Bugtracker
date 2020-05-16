@@ -41,7 +41,8 @@ RSpec.describe "Projects requests", type: :request do
     
     it "can access create" do 
       post(projects_url, params: { project: 
-                          { name: "Accepted project" }})
+                          { name: "Accepted project",
+                            description: "Required description" }})
       expect(Project.find_by(name: "Accepted project")).not_to be_nil
     end
     
