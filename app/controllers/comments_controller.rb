@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
         
       else 
         format.html do 
-          flash[:error] = "There was an error with your comment."
+          flash[:error] = "There was an error while creating your comment."
           redirect_to @project
         end
         format.json { render json: @json.errors, status: unprocessable_entity }

@@ -19,7 +19,7 @@ class BugsController < ApplicationController
       flash[:success] = "Bug reported."
       redirect_to project_path(@bug.project)
     else 
-      flash.now[:error] = "There was something wrong."
+      flash.now[:error] = "There was an error while creating the bug."
       render :new
     end
   end
@@ -31,7 +31,7 @@ class BugsController < ApplicationController
       flash[:success] = "Bug updated."
       redirect_to project_path(@project)
     else 
-      flash.now[:danger] = "There was an error."
+      flash.now[:error] = "There was an error while updating the bug."
       render :edit
     end
   end
@@ -43,7 +43,7 @@ class BugsController < ApplicationController
       flash[:success] = "Bug deleted."
       redirect_to project_path(@project)
     else 
-      flash[:danger] = "There was an error."
+      flash[:error] = "There was an error while deleting the bug."
       redirect_to project_path(@project)
     end
   end
