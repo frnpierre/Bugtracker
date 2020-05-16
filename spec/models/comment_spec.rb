@@ -15,6 +15,9 @@ RSpec.describe Comment, type: :model do
     it "content should be present" do 
       expect(comment_to_validate.valid?).to be_falsy
       expect(comment_to_validate.errors.messages[:content]).not_to be_empty
+      comment_to_validate.content = "Valid content"
+      comment_to_validate.valid?
+      expect(comment_to_validate.errors.messages[:content]).to be_empty
     end
   end
 end
