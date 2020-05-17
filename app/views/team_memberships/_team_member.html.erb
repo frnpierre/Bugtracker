@@ -2,8 +2,8 @@
   <%= membership.user.username %> - <%= membership.user.email %>
   
   <!-- Only project owner can see the remove user button -->
-  <% if current_user.id == @project.user_id %>
-    <%= link_to "remove", project_team_membership_path(@project, membership),
+  <% if current_user.id == project.user_id %>
+    <%= link_to "remove", project_team_membership_path(project, membership),
                           class: "btn btn-sm btn-danger", 
                           method: :delete,
                           confirm: "Are you sure?" %>

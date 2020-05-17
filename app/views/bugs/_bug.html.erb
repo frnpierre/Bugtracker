@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="card-header" id="heading<%= bug.id %>">
+    <h5 class="mb-0 bug-card-title">
+      <button class="btn btn-link collapse-button" data-toggle="collapse"
+              data-target="#collapse<%= bug.id %>" aria-expanded="true" 
+              aria-controls="collapse<%= bug.id %>">
+        
+        <%= bug.name %>
+      </button>
+    </h5>
+    
+    <!-- Only project owner or bug creator have access to bug actions -->
+    <% if current_user.id == project.user_id || current_user.id == bug.user_id %>
+      <%= render partial: "bugs/bug_card_actions", locals: { bug: bug, project: project } %>
+    <% end %>
+  </div>
+
+  <div id="collapse<%= bug.id %>" class="collapse" aria-labelledby="heading<%= bug.id %>" data-parent="#accordion">
+    <div class="card-body bug-card-body">
+      <h5>Description:</h5>
+      
+      <p class="bug-description">
+        <%= bug.description %>
+        <br />
+        -- reported by: <%= bug.user.username %>
+      </p>
+      
+      <!-- Comments -->
+      <h5 class="comments-title">Comments:</h5>
+      
+      <div class="bug-comments" id="bug-<%= bug.id %>-comments">
+        <!-- Uses partial _comment -->
+        <%= render bug.comments %>
+      </div>
+      
+      <%= render partial: "comments/comment_form", locals: { bug: bug, 
+                                                             comment: comment,
+                                                             project: project } %>
+      
+    </div>
+  </div>
+</div>

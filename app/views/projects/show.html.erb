@@ -8,6 +8,7 @@
     </p>
     <%= project_ownership(@project) %>
     
+    <!-- Team -->
     <div class="row no-gutters align-items-center justify-content-between">
       <h2 class="col-4">Team</h2>
       
@@ -24,13 +25,14 @@
         (They can report bugs and comment)
       </p>
         <ul class="list-group" id="team-user-list">
-          <%= render partial: "project_team_member", 
+          <%= render partial: "team_memberships/team_member", 
                      collection: @project.team_memberships, 
-                     as: :membership %>
+                     as: :membership,
+                     locals: { project: @project } %>
         </ul>
     </div>
         
-    
+    <!-- Bugs -->
     <div class="row no-gutters align-items-center justify-content-between">
       <h2 class="col-4">Bugs</h2>
       <%= link_to "Report Bug", new_project_bug_path(@project), class: "btn btn-primary" %>
@@ -38,163 +40,17 @@
     
     <h4 class="solved-status-title">Unsolved: </h4>
     
-    <% @project_unsolved_bugs.each do |bug| %>
-      <div id="accordion">
-        <div class="card">
-          <div class="card-header" id="heading<%= bug.id %>">
-            <h5 class="mb-0 bug-card-title">
-              <button class="btn btn-link collapse-button" data-toggle="collapse" data-target="#collapse<%= bug.id %>" aria-expanded="true" aria-controls="collapse<%= bug.id %>">
-                <%= bug.name %> --- solved_status: <%= bug.solved %>
-              </button>
-            </h5>
-            <% if current_user.id == @project.user_id || current_user.id == bug.user_id %>
-              <span class="bug-card-actions">
-                <% if bug.solved? %> 
-                  <%= link_to "Mark as unsolved",
-                              update_bug_solved_status_path(bug),
-                              method: :patch,
-                              id: "update-bug-solved-#{bug.id}",
-                              class: "btn-sm btn-warning" %>
-                <% else %> 
-                  <%= link_to "Mark as solved",
-                              update_bug_solved_status_path(bug),
-                              method: :patch,
-                              id: "update-bug-solved-#{bug.id}",
-                              class: "btn-sm btn-success" %>
-                <% end %>
-              
-                <%= link_to "Edit", edit_project_bug_path(@project, bug),
-                                    class: "btn-sm btn-info" %>
-                <%= link_to "Delete", project_bug_path(@project, bug),
-                                      method: :delete,
-                                      id: "delete-bug-#{bug.id}",
-                                      class: "btn-sm btn-danger", 
-                                      data: { confirm: "Are you sure?" } %>
-              </span>
-            <% end %>
-          </div>
-      
-          <div id="collapse<%= bug.id %>" class="collapse" aria-labelledby="heading<%= bug.id %>" data-parent="#accordion">
-            <div class="card-body bug-card-body">
-              <h5>Description:</h5>
-              
-              <p class="bug-description">
-                <%= bug.description %>
-                <br />
-                -- reported by: <%= bug.user.username %>
-              </p>
-              
-              
-              <h5 class="comments-title">Comments:</h5>
-              
-              <div class="bug-comments" id="bug-<%= bug.id %>-comments">
-                <!-- Uses partial _comment -->
-                <%= render bug.comments %>
-              </div>
-              
-              <div class="comment-form-box">
-                <%= form_with model: @comment do |f| %>
-                  <h5>Add a comment</h5>
-                  
-                  <div class="form-group">
-                    <%= f.label :content, class: "d-none" %>
-                    <%= f.text_area :content, class: "form-control",
-                                              id: "bug-#{bug.id}-comment-content",
-                                              required: true,
-                                              placeholder: "Type your comment here" %>
-                  </div>
-                  
-                  <%= f.hidden_field :bug_id, value: bug.id %>
-                  <%= f.hidden_field :project_id, value: @project.id %>
-                  
-                  <div class="form-group">
-                    <%= f.submit "Comment", class: "btn btn-success float-right comment-button" %>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        </div>
-    <% end %>
+    <div id="accordion">
+      <%= render partial: "bugs/bug", collection: @project_unsolved_bugs, as: :bug,
+                                      locals: { project: @project, comment: @comment } %>
+    </div>
     
     <h4 id="solved-bugs-title" class="solved-status-title">Solved</h4>
-    <% @project_solved_bugs.each do |bug| %>
-      <div id="accordion">
-        <div class="card">
-          <div class="card-header" id="heading<%= bug.id %>">
-            <h5 class="mb-0 bug-card-title">
-              <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= bug.id %>" aria-expanded="true" aria-controls="collapse<%= bug.id %>">
-                <%= bug.name %> --- solved_status: <%= bug.solved %>
-              </button>
-            </h5>
-            <% if current_user.id == @project.user_id || current_user.id == bug.user_id %>                                    
-              <span class="bug-card-actions">
-                <% if bug.solved? %> 
-                  <%= link_to "Mark as unsolved",
-                              update_bug_solved_status_path(bug),
-                              method: :patch,
-                              id: "update-bug-solved-#{bug.id}",
-                              class: "btn-sm btn-warning" %>
-                <% else %> 
-                  <%= link_to "Mark as solved",
-                              update_bug_solved_status_path(bug),
-                              method: :patch,
-                              id: "update-bug-solved-#{bug.id}",
-                              class: "btn-sm btn-success" %>
-                <% end %>
-              
-                <%= link_to "Edit", edit_project_bug_path(@project, bug),
-                                    class: "btn-sm btn-info" %>
-                                  
-                <%= link_to "Delete", project_bug_path(@project, bug),
-                                      method: :delete,
-                                      id: "delete-bug-#{bug.id}",
-                                      class: "btn-sm btn-danger", 
-                                      data: { confirm: "Are you sure?" } %>
-              </span>
-            <% end %>
-          </div>
-      
-          <div id="collapse<%= bug.id %>" class="collapse" aria-labelledby="heading<%= bug.id %>" data-parent="#accordion">
-            <div class="card-body bug-card-body">
-              <h5>Description:</h5>
-              
-              <p class="bug-description">
-                <%= bug.description %>
-                <br />
-                -- reported by: <%= bug.user.username %>
-              </p>
-              
-              <h5 class="comments-title">Comments:</h5>
-              
-              <div class="bug-comments" id="bug-<%= bug.id %>-comments">
-                <!-- Uses partial _comment -->
-                <%= render bug.comments %>
-              </div>
-              
-              <div class="comment-form-box">
-                <%= form_with model: @comment do |f| %>
-                  <h5>Add a comment</h5>
-                  
-                  <div class="form-group">
-                    <%= f.label :content, class: "d-none" %>
-                    <%= f.text_area :content, class: "form-control",
-                                              id: "bug-#{bug.id}-comment-content",
-                                              required: true,
-                                              placeholder: "Type your comment here" %>
-                  </div>
-                  
-                  <%= f.hidden_field :bug_id, value: bug.id %>
-                  <%= f.hidden_field :project_id, value: @project.id %>
-                  
-                  <div class="form-group">
-                    <%= f.submit "Comment", class: "btn btn-success float-right comment-button" %>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        </div>
-    <% end %>
+    
+    <div id="accordion">
+      <%= render partial: "bugs/bug", collection: @project_solved_bugs, as: :bug,
+                                      locals: { project: @project, comment: @comment } %>
+    </div>
+    
   </div>
 </div>

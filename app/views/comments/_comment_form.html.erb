@@ -1,0 +1,20 @@
+<div class="comment-form-box">
+  <%= form_with model: comment do |f| %>
+    <h5>Add a comment</h5>
+    
+    <div class="form-group">
+      <%= f.label :content, class: "d-none" %>
+      <%= f.text_area :content, class: "form-control",
+                                id: "bug-#{bug.id}-comment-content",
+                                required: true,
+                                placeholder: "Type your comment here" %>
+    </div>
+    
+    <%= f.hidden_field :bug_id, value: bug.id %>
+    <%= f.hidden_field :project_id, value: project.id %>
+    
+    <div class="form-group">
+      <%= f.submit "Comment", class: "btn btn-success float-right comment-button" %>
+    </div>
+  <% end %>
+</div>

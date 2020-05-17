@@ -1,0 +1,23 @@
+<span class="bug-card-actions">
+  <% if bug.solved? %> 
+    <%= link_to "Mark as unsolved",
+                update_bug_solved_status_path(bug),
+                method: :patch,
+                id: "update-bug-solved-#{bug.id}",
+                class: "btn-sm btn-warning" %>
+  <% else %> 
+    <%= link_to "Mark as solved",
+                update_bug_solved_status_path(bug),
+                method: :patch,
+                id: "update-bug-solved-#{bug.id}",
+                class: "btn-sm btn-success" %>
+  <% end %>
+
+  <%= link_to "Edit", edit_project_bug_path(project, bug),
+                      class: "btn-sm btn-info" %>
+  <%= link_to "Delete", project_bug_path(project, bug),
+                        method: :delete,
+                        id: "delete-bug-#{bug.id}",
+                        class: "btn-sm btn-danger", 
+                        data: { confirm: "Are you sure?" } %>
+</span>
