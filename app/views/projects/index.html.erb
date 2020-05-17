@@ -2,34 +2,6 @@
   <div class="col-md-8 offset-md-2">
     <h1 class="top-page-title" align="center">My projects</h1>
     
-    <% @projects.each do |project| %>
-      <div class="card border-primary project-card">
-        <%= link_to project_path(project), id: "project-#{project.name}" do %> 
-          <div class="card-header">
-            <h4 class="project-card-title">
-              <%= project.name  %>
-            </h4>
-          </div>
-        <% end %>
-        <div class="card-body">
-          <p class="card-text">
-            <%= project.description %>
-          </p>
-          
-          <%= project_ownership(project) %>
-          
-        </div>
-        <div class="card-footer">
-          <%= link_to "Show", project_path(project), class: "btn btn-primary" %>
-          
-          <% if current_user.id == project.user.id %>
-          <%= link_to "Edit", edit_project_path(project), class: "btn btn-info" %>
-          <%= link_to "Delete", project_path(project), method: :delete,
-                                id: "delete-project-#{project.id}",
-                                class: "btn btn-danger" %>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
+    <%= render partial: "project_card", collection: @projects, as: :project %>
   </div>
 </div>
