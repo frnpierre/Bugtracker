@@ -6,13 +6,17 @@
 
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      <!--<li class="nav-item active">-->
+        <!--<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
+      <!--</li>-->
+      <li class="nav-item <%= 'active' if current_page?(root_path) %>">
+        <%= link_to "Home", root_path, class: "nav-link" %>
       </li>
-      <li class="nav-item">
-        <%= link_to "Projects", projects_path, class: "nav-link" %>
+      
+      <li class="nav-item <%= 'active' if current_page?(projects_path) %>">
+        <%= link_to "My Projects", projects_path, class: "nav-link" %>
       </li>
-      <li class="nav-item">
+      <li class="nav-item <%= 'active' if current_page?(new_project_path) %>">
         <%= link_to "New project", new_project_path, class: "nav-link" %>
       </li>
       <li class="nav-item">

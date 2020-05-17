@@ -1,5 +1,6 @@
 <div class="row">
   <div class="col-md-8 offset-md-2">
+    <h1 class="top-page-title" align="center">Report bug</h1>
     <%= form_with model: [@project, @bug], local: true, html: { class: "needs-validation", novalidate: true } do |f| %>
       <legend>Report a bug on project: <%= @project.name %></legend>
       
