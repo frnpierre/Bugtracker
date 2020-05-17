@@ -44,7 +44,9 @@ module ProjectsHelper
                   </ul>
                   <p>
                     If you wish to manage the team or all the bugs of the project,
-                    you need to log in as #{project.user.username}
+                    you need to #{ link_to "Login as owner",
+                                            become_user_path(project.user.id),
+                                            class: 'btn btn-sm btn-success' }
                   </p>
                 </div>"
       end

@@ -1,11 +1,17 @@
 <li class="list-group-item d-flex justify-content-between align-items-center">
   <%= membership.user.username %> - <%= membership.user.email %>
   
-  <!-- Only project owner can see the remove user button -->
-  <% if current_user.id == project.user_id %>
-    <%= link_to "remove", project_team_membership_path(project, membership),
-                          class: "btn btn-sm btn-danger", 
-                          method: :delete,
-                          confirm: "Are you sure?" %>
-  <% end %>
+  <div class="team-actions">
+    <!-- Login as links are available for everybody -->
+    <%= link_to "Log in as", become_user_path(membership.user.id),
+                             class: "btn btn-sm btn-success" %>
+    
+    <!-- Only project owner can see the remove user button -->
+    <% if current_user.id == project.user_id %>
+      <%= link_to "remove", project_team_membership_path(project, membership),
+                            class: "btn btn-sm btn-danger", 
+                            method: :delete,
+                            confirm: "Are you sure?" %>
+    <% end %>
+  </div>
 </li>

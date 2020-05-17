@@ -54,4 +54,21 @@ RSpec.describe "user authentication", type: :system do
     expect(page).not_to have_selector(".login-link")
   end
   
+  it "Become team member works from project#show page" do
+    sign_in(user)
+    visit project_path(project_with_team)
+    find("a[href='#{become_user_path(user_two.id)}']").click
+    expect(page).to have_content("You logged in as #{user_two.username}")
+    expect(page).to have_selector(".logout-link")
+    expect(page).not_to have_selector(".login-link")
+  end
+  
+  it "Become project owner works from project#show page" do
+    sign_in(user_two)
+    visit project_path(project_with_team)
+    find("a[href='#{become_user_path(project_with_team.user.id)}']").click
+    expect(page).to have_content("You logged in as #{project_with_team.user.username}")
+    expect(page).to have_selector(".logout-link")
+    expect(page).not_to have_selector(".login-link")
+  end
 end
