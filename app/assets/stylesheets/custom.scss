@@ -1,3 +1,10 @@
+.top-page-title {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+//////////  PROJECTS  ////////// 
+
 .project-description,
 .project-ownership {
   margin-left: 32px;
@@ -5,13 +12,34 @@
 
 .project-card {
   margin-bottom: 16px;  
-  .project-owner {
+  .project-owner,
+  .project-card-title {
     margin-bottom: 0px;
   }
 }
 
-.project-card-title {
-  margin-bottom: 0;
+//////////  TEAM  ////////// 
+
+#project-team-list {
+  margin-bottom: 8px;
+  // p { 
+  // margin-left: 32px; 
+  // }
+}
+
+#project-team-list p,
+.solved-status-title {
+  margin-left: 32px;
+}
+
+#team-user-list li {
+  padding-left: 32px;
+}
+
+//////////  BUGS  ////////// 
+
+#solved-bugs-title {
+  margin-top: 8px;
 }
 
 .bug-card-actions {
@@ -26,11 +54,7 @@
   }
 }
 
-.top-page-title {
-  margin-top: 16px;
-  margin-bottom: 16px;
-}
-
+//////////  COMMENTS  ////////// 
 
 .bug-comments {
   margin-left: 16px;
@@ -51,19 +75,3 @@
   margin-bottom: 20px;
 }
 
-#solved-bugs-title {
-  margin-top: 8px;
-}
-
-#project-team-list {
-  margin-bottom: 8px;
-}
-
-#project-team-list p,
-.solved-status-title {
-  margin-left: 32px;
-}
-
-#team-user-list li {
-  padding-left: 32px;
-}

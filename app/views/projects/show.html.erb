@@ -38,19 +38,20 @@
       <%= link_to "Report Bug", new_project_bug_path(@project), class: "btn btn-primary" %>
     </div>
     
-    <h4 class="solved-status-title">Unsolved: </h4>
-    
-    <div id="accordion">
-      <%= render partial: "bugs/bug", collection: @project_unsolved_bugs, as: :bug,
-                                      locals: { project: @project, comment: @comment } %>
-    </div>
-    
-    <h4 id="solved-bugs-title" class="solved-status-title">Solved</h4>
-    
-    <div id="accordion">
-      <%= render partial: "bugs/bug", collection: @project_solved_bugs, as: :bug,
-                                      locals: { project: @project, comment: @comment } %>
-    </div>
-    
+    <% if !@project.bugs.empty? %>
+      <h4 class="solved-status-title">Unsolved</h4>
+      
+      <div id="accordion">
+        <%= render partial: "bugs/bug", collection: @project_unsolved_bugs, as: :bug,
+                                        locals: { project: @project, comment: @comment } %>
+      </div>
+      
+      <h4 id="solved-bugs-title" class="solved-status-title">Solved</h4>
+      
+      <div id="accordion">
+        <%= render partial: "bugs/bug", collection: @project_solved_bugs, as: :bug,
+                                        locals: { project: @project, comment: @comment } %>
+      </div>
+    <% end %>
   </div>
 </div>
