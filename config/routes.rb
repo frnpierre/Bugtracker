@@ -10,5 +10,5 @@ Rails.application.routes.draw do
   
   resources :comments, only: [:create]
   
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get "become_user/:id", to: "application#become_user", as: "become_user"
 end

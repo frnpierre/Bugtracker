@@ -1,2 +1,8 @@
-<h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
+<h3>Login as a user</h3>
+
+<p>just click the link to get logged in as this user</p>
+<ul>
+  <% @users.each do |user| %>
+    <li><%= link_to "Login as #{user.username}", become_user_path(user.id) %></li>
+  <% end %>
+</ul>
