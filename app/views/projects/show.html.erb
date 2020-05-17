@@ -24,21 +24,9 @@
         (They can report bugs and comment)
       </p>
         <ul class="list-group" id="team-user-list">
-          
-          
-          <% @project.team_memberships.each do |membership| %>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <%= membership.user.username %> - <%= membership.user.email %>
-              
-              <!-- Only project owner can see the remove user button -->
-              <% if current_user.id == @project.user_id %>
-                <%= link_to "remove", project_team_membership_path(@project, membership),
-                                      class: "btn btn-sm btn-danger", 
-                                      method: :delete,
-                                      confirm: "Are you sure?" %>
-              <% end %>
-            </li>
-          <% end %>
+          <%= render partial: "project_team_member", 
+                     collection: @project.team_memberships, 
+                     as: :membership %>
         </ul>
     </div>
         
