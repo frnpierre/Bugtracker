@@ -3,7 +3,11 @@ require "rails_helper"
 RSpec.describe "user authentication", type: :system do 
   
   let!(:user) { create(:user, username: "First user") } 
-  let(:user_two) { create(:user) }
+  let!(:user_two) { create(:user, username: "Second user") }
+  
+  let!(:project_with_team) { create(:project, description: "Project with team",
+                                              user: user,
+                                              allowed_users: [user_two]) }
   
   it "login is possible with valid credentials" do 
     visit new_user_session_path
@@ -29,10 +33,25 @@ RSpec.describe "user authentication", type: :system do
     expect(page).not_to have_selector(".logout-link")
   end
   
-  it "Become user works from home page" do
+  it "Become user works from home page if logged out" do
     visit root_path
-    expect(page).to have_link(href: become_user_path(user.id))
+    expect(page).not_to have_selector(".logout-link")
+    expect(page).to have_selector(".login-link")
     find("a[href='#{become_user_path(user.id)}']").click
     expect(page).to have_content("You logged in as #{user.username}")
+    expect(page).to have_selector(".logout-link")
+    expect(page).not_to have_selector(".login-link")
   end
+  
+  it "Become user works from home page if already logged in" do
+    sign_in(user)
+    visit root_path
+    expect(page).to have_selector(".logout-link")
+    expect(page).not_to have_selector(".login-link")
+    find("a[href='#{become_user_path(user_two.id)}']").click
+    expect(page).to have_content("You logged in as #{user_two.username}")
+    expect(page).to have_selector(".logout-link")
+    expect(page).not_to have_selector(".login-link")
+  end
+  
 end
