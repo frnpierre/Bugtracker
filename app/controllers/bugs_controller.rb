@@ -14,7 +14,7 @@ class BugsController < ApplicationController
   
   def create
     @project = Project.find(params[:project_id])
-    @bug = @project.bugs.build(bug_params)
+    @bug = @project.bugs.build(bug_params.merge(user: current_user))
     if @bug.save
       flash[:success] = "Bug reported."
       redirect_to project_path(@bug.project)
@@ -64,7 +64,7 @@ class BugsController < ApplicationController
   private
   
     def bug_params
-      params.require(:bug).permit(:name, :description).merge(user: current_user)
+      params.require(:bug).permit(:name, :description)
     end
     
     def allow_only_team
