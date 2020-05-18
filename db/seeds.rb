@@ -20,10 +20,10 @@ if Rails.env.development?
   
   
   2.times do |n| 
-    Project.create(name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
+    Project.create(name: Faker::App.name,
                     description: Faker::Lorem.paragraph,
                     user: user_1)
-    Project.create(name: Faker::Lorem.words(number: rand(1..4)).join(" ").capitalize,
+    Project.create(name: Faker::App.name,
                     description: Faker::Lorem.paragraph,
                     user: user_2)
   end
