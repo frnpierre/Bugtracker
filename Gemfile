@@ -43,6 +43,8 @@ gem 'bootstrap', '~> 4.4.1'
 gem "jquery-rails"
 # Authentication with devise
 gem "devise"
+# Faker
+gem "faker"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -51,8 +53,6 @@ group :development, :test do
   gem "rspec-rails", "~> 3.7.0"
   # Factory bot
   gem "factory_bot_rails"
-  # Faker
-  gem "faker"
 end
 
 group :development do
