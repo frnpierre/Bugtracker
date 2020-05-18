@@ -8,8 +8,8 @@
 
 if Rails.env.development? 
   
-  user_1 = User.create(username: "User-one", email: "test@example.com", password: "password")
-  user_2 = User.create(username: "User-two", email: "test2@example.com", password: "password")
+  user_1 = User.create(username: "User-one", email: "user-one@example.com", password: "password")
+  user_2 = User.create(username: "User-two", email: "user-two@example.com", password: "password")
   
   10.times do |n|
     user_name = Faker::Internet.user_name(separators: "")

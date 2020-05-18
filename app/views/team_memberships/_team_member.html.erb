@@ -3,9 +3,12 @@
   
   <div class="team-actions">
     <!-- Login as links are available for everybody -->
-    <%= link_to "Log in as", become_user_path(membership.user.id),
-                             class: "btn btn-sm btn-success" %>
-    
+    <% if current_user.id != membership.user.id %>
+      <%= link_to "Log in as", become_user_path(membership.user.id),
+                               class: "btn btn-sm btn-success" %>
+    <% else %>
+      <span>(You)</span>
+    <% end %>
     <!-- Only project owner can see the remove user button -->
     <% if current_user.id == project.user_id %>
       <%= link_to "remove", project_team_membership_path(project, membership),

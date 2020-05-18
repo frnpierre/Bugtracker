@@ -1,8 +1,73 @@
-<h3>Login as a user</h3>
+<div class="row">
+  <div class="col-md-8 offset-md-2">
 
-<p>just click the link to get logged in as this user</p>
-<ul>
-  <% @users.each do |user| %>
-    <li><%= link_to "Login as #{user.username}", become_user_path(user.id) %></li>
-  <% end %>
-</ul>
+    <h3 class="top-page-title">
+      Welcome to BugTracker, an app from my web developer 
+      portfolio.
+    </h3>
+    
+    <p>
+      It's a simple bug tracking system that I created to showcase my ruby on rails
+      skills, with a focus on the back-end side, but I made sure to apply essential
+      front-end design principles ( proximity, alignment, contrast.. )
+    </p>
+    
+    <h4 class="home-page-title">How I built it: </h4>
+    
+    <p>
+      I chose to use Rails 5.2.3 , Bootstrap 4, PostgreSQL and Devise
+    </p>
+    
+    <div>
+      I used a TDD process during the whole development, using RSpec, Capybara
+      and FactoryBot<br/>
+      <ul>
+      	<li>
+      	  I used outside-in testing for features requiring user interaction, starting 
+      	  with an integration spec (they are located in  specs/system)
+      	</li>
+      	<li>
+      	  I used requests specs to test all actions and authorizations (they are 
+      	  located in specs/requests) 
+      	</li>
+    	</ul>
+    </div>
+    
+    <div>
+      For authorizations, I chose to use before filters instead of using CanCanCan or Pundit<br/>
+    	<ul>
+    	  <li>
+    	    Users can only access their own projects, or a project they are part of the team.
+    	  </li>
+       	<li>
+       	  Everything you are allowed to do on these projects is explained on the project show page.
+       	</li>
+    	</ul>
+    </div>
+    
+    <p>
+      For validations I decided to only require presence: on the front-end with 
+      bootstrap form validations, on the back--end with models validations. 
+      I decided not to enforce it at the database level.
+    </p>
+    
+    <p class="text-info">
+      I put "Login as" buttons throughout the app for you to quickly switch between 
+      users and explore the differences.
+    </p>
+    
+    <p>
+      If you have any questions, feel free to ask !
+    </p>
+
+    <h4>Login as a user</h4>
+    
+    <p>You can use the <%= link_to "login page", new_user_session_path %> or just click on a user below.</p>
+    <ul>
+      <% @users.each do |user| %>
+        <li><%= link_to "#{user.username}", become_user_path(user.id) %></li>
+      <% end %>
+    </ul>
+
+  </div>
+</div>

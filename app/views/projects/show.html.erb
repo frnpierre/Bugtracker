@@ -38,6 +38,8 @@
       <%= link_to "Report Bug", new_project_bug_path(@project), class: "btn btn-primary" %>
     </div>
     
+    <p class="bugs-instructions">Click on a bug for more infos.</p>
+    
     <% if !@project.bugs.empty? %>
       <h4 class="solved-status-title">Unsolved</h4>
       

@@ -5,7 +5,7 @@
               data-target="#collapse<%= bug.id %>" aria-expanded="true" 
               aria-controls="collapse<%= bug.id %>">
         
-        <%= bug.name %>
+        <%= bug.name %> - reported by <%= bug.user.username %>
       </button>
     </h5>
     
