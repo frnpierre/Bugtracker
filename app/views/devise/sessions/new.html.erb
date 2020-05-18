@@ -24,6 +24,14 @@
         <%= f.submit "Log in", class: "btn btn-success" %>
       </div>
     <% end %>
+    
+    <h4 align="center">List of users</h4>
+    
+    <p align="center">(Each user password is "password")</p>
+    
+    <% @users.each do |user| %>
+      <p><%= user.email %></p>
+    <% end %>
   </div>
 </div>
 
