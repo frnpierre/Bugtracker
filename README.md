@@ -1,6 +1,6 @@
 ### Welcome to BugTracker, an app from my web developer portfolio.
 
-It's a simple bug tracking system that I created to showcase my ruby on rails skills, with a focus on the back-end side, but I made sure to apply essential front-end design principles (proximity, alignment, contrast..)
+It's a simple bug tracking system that I created to showcase my ruby on rails skills, with a focus on the back-end side, but I made sure to apply essential front-end design principles (proximity, alignment, contrast..)<br/>
 You can play with a live version here: https://mybgtrack.herokuapp.com/ (It's hosted on a heroku free dyno so it might take a few seconds to start)
 
 #### How I built it:
